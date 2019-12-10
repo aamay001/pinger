@@ -1,1 +1,1 @@
-worker: node app
+worker: npm run start
