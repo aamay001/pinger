@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('colors');
 const fetch = require('node-fetch');
 const format = require('date-fns/format');
@@ -6,7 +7,9 @@ const siteMap = new Map();
 
 // Config
 const sites = [
-    'http://google.com',
+    ...Object.keys(process.env)
+        .filter(k => k.startsWith('PING_SITE_'))
+        .map(k => process.env[k])
 ];
 
 const MINUTES = 10;
@@ -65,5 +68,10 @@ const printResults = () => {
 
 sites.forEach(site => siteMap.set(site, {}));
 
-processUpdates();
-const interval = setInterval(processUpdates, INTERVAL_TIME);
+if (sites.length > 0) {
+    processUpdates();
+    const interval = setInterval(processUpdates, INTERVAL_TIME);
+} else {
+    console.warn('No sites to ping!'.yellow);
+    console.error('Missing .env PING_SITE_ entries.'.red);
+}
