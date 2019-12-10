@@ -1,15 +1,15 @@
-import 'colors';
-import fetch from 'node-fetch';
-import format from 'date-fns/format';
+require('colors');
+const fetch = require('node-fetch');
+const format = require('date-fns/format');
 
 const siteMap = new Map();
 
 // Config
 const sites = [
-    'http://google.com'
+    'http://google.com',
 ];
 
-const MINUTES = 15;
+const MINUTES = 10;
 const INTERVAL_TIME = 60000 * MINUTES;
 const REQUEST_TIMEOUT = 30000;
 const DATE_FORMAT = 'MM/DD/YYYY - h:mm A';
