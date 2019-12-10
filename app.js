@@ -12,7 +12,7 @@ const sites = [
         .map(k => process.env[k])
 ];
 
-const MINUTES = 10;
+const MINUTES = process.env.INTERVAL_TIME_MINUTES || 5;
 const INTERVAL_TIME = 60000 * MINUTES;
 const REQUEST_TIMEOUT = 30000;
 const DATE_FORMAT = 'MM/DD/YYYY - h:mm A';
