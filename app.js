@@ -9,7 +9,7 @@ const sites = [
     'http://google.com'
 ];
 
-const MINUTES = 25;
+const MINUTES = 15;
 const INTERVAL_TIME = 60000 * MINUTES;
 const REQUEST_TIMEOUT = 30000;
 const DATE_FORMAT = 'MM/DD/YYYY - h:mm A';
@@ -30,8 +30,8 @@ const updateStatus = () => {
     [...siteMap.keys()].forEach(key => {
         updateState(key, STATUS.PENDING);
         fetch(key, {
-                timeout: REQUEST_TIMEOUT
-            })
+            timeout: REQUEST_TIMEOUT
+        })
             .then((res) => {
                 if (res.status === 200) {
                     updateState(key, STATUS.OK);
