@@ -5,17 +5,17 @@ Simple node app to continuously ping a list of addresses.
 
 - git clone
 - npm install
-- Add URL's to the sites array.
+- Add config to .env file.
 ```
-const sites = [
-    'http://google.com',
-    'http://yahoo.com'
-];
+# Set Interval time
+INTERVAL_TIME_MINUTES=15
+
+# Prepend PING_SITE_ to any var to use as a site to ping.
+PING_SITE_NAME=http://google.com
+PING_SITE_NAME2=https://yahoo.com
+
 ```
-- Change the minutes variable to control the frequency in minutes.
-```
-const MINUTES = 25;
-```
+
 - npm start
 
 
