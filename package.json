@@ -2,6 +2,7 @@
   "name": "pinger",
   "version": "1.0.0",
   "description": "",
+  "repository": "git@github.com:aamay001/pinger.git",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
