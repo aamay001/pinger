@@ -9,7 +9,7 @@ const siteMap = new Map();
 const sites = [
     ...Object.keys(process.env)
         .filter(k => k.startsWith('PING_SITE_'))
-        .map(k => process.env[k])
+        .map(k => ({ url: process.env[k], name: k.replace('PING_SITE_', '') }))
 ];
 
 const MINUTES = process.env.INTERVAL_TIME_MINUTES || 5;
@@ -32,7 +32,7 @@ const processUpdates = () => {
 const updateStatus = () => {
     [...siteMap.keys()].forEach(key => {
         updateState(key, STATUS.PENDING);
-        fetch(key, {
+        fetch(siteMap.get(key).url, {
             timeout: REQUEST_TIMEOUT
         })
             .then((res) => {
@@ -43,6 +43,7 @@ const updateStatus = () => {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 updateState(key, STATUS.ERROR);
             });
     });
@@ -50,6 +51,7 @@ const updateStatus = () => {
 
 const updateState = (key, status) => {
     siteMap.set(key, {
+        url: siteMap.get(key).url,
         status: status,
         lastPing: new Date()
     });
@@ -62,11 +64,11 @@ const printResults = () => {
     console.log(`Address\nStatus\tLastPing\n`);
     [...siteMap.keys()].forEach(function (key) {
         const state = siteMap.get(key);
-        console.log(`${key}\n${state.status}\t${format(state.lastPing, DATE_FORMAT)}\n`);
+        console.log(`${key.replace(/[_]/g, ' ')}\n${state.url}\n${state.status}\t${format(state.lastPing, DATE_FORMAT)}\n`);
     });
 }
 
-sites.forEach(site => siteMap.set(site, {}));
+sites.forEach(site => siteMap.set(site.name, { url: site.url }));
 
 if (sites.length > 0) {
     processUpdates();
